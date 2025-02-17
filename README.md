@@ -56,7 +56,7 @@ This project is a **Password Manager** with advanced security features that not 
 
 ## Team Members
 
-Prabir Kalwani
-Aayush Shah
-Snehil Sinha
+Prabir Kalwani  
+Aayush Shah  
+Snehil Sinha  
 Siddhi Shivhare
