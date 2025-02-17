@@ -46,6 +46,9 @@ This project is a **Password Manager** with advanced security features that not 
 - AWS/Azure (Cloud Hosting)
 - CI/CD (GitHub Actions)
 
+## ERD Entity Relation Diagram 
+![mermaid-diagram-2025-02-17-181529](https://github.com/user-attachments/assets/83ba084c-fe32-474f-9558-3f1aaa5e331d)
+
 ## Microservices Breakdown
 
 1. **Authentication Service:** Handles user registration, login, and session management.
