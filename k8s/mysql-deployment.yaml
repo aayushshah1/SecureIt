@@ -1,0 +1,75 @@
+# MySQL Credentials Secret
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-secret
+type: Opaque
+data:
+  username: cm9vdA==    # Base64 encoded 'root'
+  password: dGVzdEAxMjM= # Base64 encoded 'test@123'
+---
+# Persistent Volume Claim for MySQL data
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce  # Can be mounted as read-write by a single node
+  resources:
+    requests:
+      storage: 1Gi    # Request 1GB of persistent storage
+---
+# MySQL Database Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  strategy:
+    type: Recreate  # Ensure clean shutdown and startup
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          # Environment variables for MySQL configuration
+          env:
+            - name: MYSQL_ROOT_PASSWORD  # Set root password from secret
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: password
+            - name: MYSQL_DATABASE      # Create initial database
+              value: password_manager
+          ports:
+            - containerPort: 3306
+              name: mysql
+          # Mount persistent storage
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+      # Configure persistent storage
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-pvc
+---
+# Headless Service for MySQL
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  ports:
+    - port: 3306       # Service port
+      targetPort: 3306 # Container port
+  selector:
+    app: mysql
+  clusterIP: None      # Headless service for direct pod access

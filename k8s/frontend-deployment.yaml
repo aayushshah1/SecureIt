@@ -1,0 +1,40 @@
+# Frontend React Application Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  selector:
+    matchLabels:
+      app: frontend
+  replicas: 1  # Single replica for development
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: client:latest
+          imagePullPolicy: Never  # For local development
+          ports:
+            - containerPort: 80   # Nginx serves on port 80
+          # Environment variables for React app
+          env:
+            - name: REACT_APP_API_URL
+              value: "http://backend:8080"  # Connect to backend service
+---
+# Frontend Service for external access
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  selector:
+    app: frontend
+  ports:
+    - protocol: TCP
+      port: 80          # Service port
+      targetPort: 80    # Container port
+  type: NodePort       # Expose service externally
+  nodePort: 30080     # Access via localhost:30080

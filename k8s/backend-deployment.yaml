@@ -1,0 +1,81 @@
+# ConfigMap for Spring Boot application properties
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+data:
+  # Spring Boot configuration properties
+  application.properties: |
+    # Application name
+    spring.application.name=pmbackend
+    
+    # Database configuration
+    spring.datasource.url=jdbc:mysql://mysql:3306/password_manager
+    spring.datasource.username=root
+    spring.datasource.password=test@123
+    spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+    
+    # JPA/Hibernate settings
+    spring.jpa.hibernate.ddl-auto=update
+    spring.jpa.show-sql=true
+    
+    # Server configuration
+    server.port=8080
+---
+# Backend Spring Boot Application Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  # Pod selector matching
+  selector:
+    matchLabels:
+      app: backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: pmbackend:latest
+          imagePullPolicy: Never  # For local development
+          ports:
+            - containerPort: 8080  # Spring Boot application port
+          # Environment configuration
+          env:
+            - name: SPRING_CONFIG_LOCATION
+              value: "/app/config/application.properties"
+          # Mount ConfigMap as a file
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app/config/application.properties
+              subPath: application.properties
+          # Health check
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 10  # Wait before first probe
+            periodSeconds: 5         # Probe interval
+      # Volumes configuration
+      volumes:
+        - name: config-volume
+          configMap:
+            name: backend-config
+---
+# Backend Service for internal communication
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  selector:
+    app: backend
+  ports:
+    - protocol: TCP
+      port: 8080        # Service port
+      targetPort: 8080  # Container port
+      nodePort: 30081
+  type: NodePort
