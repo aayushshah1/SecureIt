@@ -1,40 +1,38 @@
-# Frontend React Application Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
+  name: pmfrontend
 spec:
+  replicas: 1 # Single replica for development
   selector:
     matchLabels:
-      app: frontend
-  replicas: 1  # Single replica for development
+      app: pmfrontend
   template:
     metadata:
       labels:
-        app: frontend
+        app: pmfrontend
     spec:
       containers:
-        - name: frontend
-          image: client:latest
-          imagePullPolicy: Never  # For local development
+        - name: pmfrontend
+          image: pmfrontend:latest # Ensure proper naming
+          imagePullPolicy: IfNotPresent # Use 'Always' if pulling from a registry
           ports:
-            - containerPort: 80   # Nginx serves on port 80
-          # Environment variables for React app
+            - containerPort: 80 # Ensure Nginx or the server runs on this port
           env:
             - name: REACT_APP_API_URL
-              value: "http://backend:8080"  # Connect to backend service
+              value: "http://backend:8080" # Backend service URL
+
 ---
-# Frontend Service for external access
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend
+  name: pmfrontend
 spec:
   selector:
-    app: frontend
+    app: pmfrontend
+  type: NodePort # Expose externally for local testing
   ports:
     - protocol: TCP
-      port: 80          # Service port
-      targetPort: 80    # Container port
-  type: NodePort       # Expose service externally
-  nodePort: 30080     # Access via localhost:30080
+      port: 80 # Service port exposed to external users
+      targetPort: 80 # Should match containerPort
+      nodePort: 30090 # Correct placement inside ports
