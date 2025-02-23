@@ -21,6 +21,9 @@ data:
 
     # Server configuration
     server.port=8080
+    #prometheus backend endpoints 
+    management.endpoints.web.exposure.include=*
+    management.endpoint.health.show-details=always
 ---
 # Backend Spring Boot Application Deployment
 apiVersion: apps/v1
