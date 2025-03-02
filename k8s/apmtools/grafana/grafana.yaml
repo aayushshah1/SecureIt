@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: grafana-datasources
-  namespace: monitoring
+  namespace: default
 data:
   datasources.yaml: |
     apiVersion: 1
@@ -10,15 +10,14 @@ data:
       - name: Prometheus
         type: prometheus
         access: proxy
-        url: http://prometheus-service.monitoring:9090  # Update if Prometheus has a different service name
+        url: http://prometheus.default:9090  
         isDefault: true
-
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: grafana
-  namespace: monitoring
+  namespace: default
   labels:
     app: grafana
 spec:
@@ -36,6 +35,8 @@ spec:
           image: grafana/grafana:latest
           ports:
             - containerPort: 3000
+          args:
+            - "--server.protocol=http"
           volumeMounts:
             - name: grafana-config
               mountPath: /etc/grafana/provisioning/datasources
@@ -43,19 +44,17 @@ spec:
         - name: grafana-config
           configMap:
             name: grafana-datasources
-
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: grafana
-  namespace: monitoring
+  namespace: default
 spec:
-  type: NodePort # Change to LoadBalancer if using cloud-based Kubernetes
   selector:
     app: grafana
   ports:
     - protocol: TCP
-      port: 80
+      port: 3000
       targetPort: 3000
-      nodePort: 32000 # Exposes Grafana on Minikube (optional)
+  type: ClusterIP
