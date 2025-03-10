@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pmfrontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pmfrontend
+  template:
+    metadata:
+      labels:
+        app: pmfrontend
+    spec:
+      containers:
+        - name: pmfrontend
+          image: pmfrontend:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          env:
+            - name: REACT_APP_API_URL
+              value: "http://backend:8080"
+            - name: BEYLA_TARGET_ADRESS
+              value: ":80"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pmfrontend
+spec:
+  selector:
+    app: pmfrontend
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30090
