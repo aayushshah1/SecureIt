@@ -4,28 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="859d2a8d-aac7-4fdd-b876-538f9866ed2c" name="Changes" comment="EurekaServer">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EurekaServer/.gitattributes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EurekaServer/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EurekaServer/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EurekaServer/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EurekaServer/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EurekaServer/src/main/java/com/example/eurekaserver/EurekaServerApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EurekaServer/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EurekaServer/src/test/java/com/example/eurekaserver/EurekaServerApplicationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-server/.gitattributes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-server/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-server/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-server/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-server/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/AuthServerApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-server/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-server/src/test/java/com/example/auth_server/AuthServerApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pmbackend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pmbackend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/src/main/resources/application.properties" afterDir="false" />
-    </list>
+    <list default="true" id="859d2a8d-aac7-4fdd-b876-538f9866ed2c" name="Changes" comment="Added env.properties file to Spring Application Root" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -61,32 +40,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.AuthServerApplication.executor": "Run",
-    "Spring Boot.EurekaServerApplication.executor": "Run",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/snehi/OneDrive - Shri Vile Parle Kelavani Mandal/MPSTME/Course Work/Third Year/Sem 6/Subjects/CS/Practical/Code",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "org.rust.first.attach.projects": "true",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "run.configurations.included.in.services": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.AuthServerApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.EurekaServerApplication.executor&quot;: &quot;Run&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/snehi/OneDrive - Shri Vile Parle Kelavani Mandal/MPSTME/Course Work/Third Year/Sem 6/Subjects/CS/Practical/Code&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;org.rust.first.attach.projects&quot;: &quot;true&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunDashboard">
     <option name="configurationTypes">
       <set>
@@ -147,6 +126,7 @@
       <workItem from="1741629382710" duration="2129000" />
       <workItem from="1741665114105" duration="2357000" />
       <workItem from="1741754662246" duration="58000" />
+      <workItem from="1741770411768" duration="341000" />
     </task>
     <task id="LOCAL-00001" summary="EurekaServer">
       <option name="closed" value="true" />
@@ -156,7 +136,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741631400949</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added env.properties file to Spring Application Root">
+      <option name="closed" value="true" />
+      <created>1741770575822</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1741770575822</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -175,6 +163,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="EurekaServer" />
-    <option name="LAST_COMMIT_MESSAGE" value="EurekaServer" />
+    <MESSAGE value="Added env.properties file to Spring Application Root" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added env.properties file to Spring Application Root" />
   </component>
 </project>
