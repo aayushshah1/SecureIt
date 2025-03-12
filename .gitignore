@@ -1,0 +1,58 @@
+# Ignore compiled Java output
+target/
+build/
+
+# Keep Maven Wrapper
+!.mvn/wrapper/maven-wrapper.jar
+
+# Ignore IDE-specific files
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+# Ignore dependency directories
+node_modules/
+.mvn/
+.gradle/
+
+# Ignore log files
+logs/
+*.log
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore environment variables
+.env
+env.properties
+
+# Ignore compiled application files
+*.jar
+*.war
+*.ear
+
+# Ignore database-related files
+h2-console/
+data/
