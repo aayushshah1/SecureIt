@@ -3,6 +3,7 @@ package com.example.auth_server.Controller;
 import com.example.auth_server.DTO.TokenValidationRequest;
 import com.example.auth_server.DTO.TokenValidationResponse;
 import com.example.auth_server.Entity.User;
+import com.example.auth_server.Entity.Role;
 import com.example.auth_server.Service.JwtService;
 import com.example.auth_server.Service.UserService;
 import org.slf4j.Logger;
@@ -61,6 +62,8 @@ public class JwtValidationController {
                 
                 response.setUserId(user.getId());
                 response.setEmail(user.getEmail());
+                response.setUsername(user.getUsername());
+                response.setRole(user.getRole());
                 response.setMessage("Token is valid");
             } else {
                 response.setMessage("Token is invalid");
@@ -77,11 +80,11 @@ public class JwtValidationController {
 
     /**
      * Extracts and returns claims from a JWT without full validation
-     * Useful for debugging or when services need to inspect token content
+     * This endpoint supports both extract-claims and get-claims paths for backward compatibility
      * @param token JWT token as a request parameter
      * @return map of claims from the token
      */
-    @GetMapping("/extract-claims")
+    @GetMapping({"/extract-claims", "/get-claims"})
     public ResponseEntity<Map<String, Object>> extractClaims(@RequestParam String token) {
         try {
             Map<String, Object> claims = new HashMap<>(jwtService.extractAllClaims(token));
@@ -124,5 +127,103 @@ public class JwtValidationController {
         response.put("status", "UP");
         response.put("service", "JWT Validation Service");
         return ResponseEntity.ok(response);
+    }
+
+    /**
+     * Verifies if the user in the JWT token matches the requested user ID
+     * Used by pmbackend to ensure users can only access their own data
+     * @param token JWT token from the request
+     * @param userId User ID being accessed
+     * @return authorization result with access permission
+     */
+    @GetMapping("/verify-user-access")
+    public ResponseEntity<Map<String, Object>> verifyUserAccess(
+            @RequestParam String token, 
+            @RequestParam Long userId) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            // Extract username (email) from token
+            String email = jwtService.extractUsername(token);
+            
+            // Get user details
+            UserDetails userDetails = userService.loadUserByUsername(email);
+            
+            // Validate token
+            boolean isValid = jwtService.isTokenValid(token, userDetails);
+            
+            if (isValid) {
+                // Get user information to compare IDs
+                User user = userService.findByEmail(email)
+                        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                
+                // Check if user is an ADMIN (admins can access any user's data)
+                boolean isAdmin = user.getRole() == Role.ADMIN;
+                
+                // User has access if they're accessing their own data or they're an admin
+                boolean hasAccess = user.getId().equals(userId) || isAdmin;
+                
+                response.put("authorized", hasAccess);
+                response.put("role", user.getRole().toString());
+                response.put("message", hasAccess ? 
+                        "User is authorized to access this resource" : 
+                        "User is not authorized to access this resource");
+                
+                return ResponseEntity.ok(response);
+            } else {
+                response.put("authorized", false);
+                response.put("message", "Invalid token");
+                return ResponseEntity.status(401).body(response);
+            }
+        } catch (Exception e) {
+            logger.error("Error verifying user access", e);
+            response.put("authorized", false);
+            response.put("message", "Error verifying access: " + e.getMessage());
+            return ResponseEntity.status(401).body(response);
+        }
+    }
+    
+    /**
+     * Checks if a user has a specific role
+     * @param token JWT token
+     * @param role Role to check
+     * @return whether user has the specified role
+     */
+    @GetMapping("/check-role")
+    public ResponseEntity<Map<String, Object>> checkRole(
+            @RequestParam String token,
+            @RequestParam String role) {
+        Map<String, Object> response = new HashMap<>();
+        
+        try {
+            // Extract username (email) from token
+            String email = jwtService.extractUsername(token);
+            
+            // Get user details
+            UserDetails userDetails = userService.loadUserByUsername(email);
+            
+            // Validate token
+            boolean isValid = jwtService.isTokenValid(token, userDetails);
+            
+            if (isValid) {
+                User user = userService.findByEmail(email)
+                        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                
+                boolean hasRole = user.getRole().name().equals(role);
+                
+                response.put("hasRole", hasRole);
+                response.put("userRole", user.getRole().name());
+                
+                return ResponseEntity.ok(response);
+            } else {
+                response.put("hasRole", false);
+                response.put("message", "Invalid token");
+                return ResponseEntity.status(401).body(response);
+            }
+        } catch (Exception e) {
+            logger.error("Error checking role", e);
+            response.put("hasRole", false);
+            response.put("message", "Error checking role: " + e.getMessage());
+            return ResponseEntity.status(401).body(response);
+        }
     }
 }

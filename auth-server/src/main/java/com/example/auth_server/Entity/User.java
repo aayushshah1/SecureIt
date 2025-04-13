@@ -6,8 +6,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Table(name = "users") // Same table name as in pmbackend
@@ -34,6 +35,9 @@ public class User implements UserDetails {
     private String firstName;
     
     private String lastName;
+    
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.USER; // Default role is USER
 
     // We don't map the passwords relationship here since auth-server doesn't need it
     // But it uses the same table structure
@@ -47,7 +51,9 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority("USER"));
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + role.name()));
+        return authorities;
     }
 
     @Override

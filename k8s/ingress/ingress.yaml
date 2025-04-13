@@ -23,11 +23,25 @@ spec:
             name: auth-server
             port:
               number: 8080
-      - path: /api
+      - path: /api/jwt
         pathType: Prefix
         backend:
           service:
-            name: backend
+            name: auth-server
+            port:
+              number: 8080
+      - path: /api/passwords
+        pathType: Prefix
+        backend:
+          service:
+            name: pmbackend
+            port:
+              number: 8080
+      - path: /api/users
+        pathType: Prefix
+        backend:
+          service:
+            name: pmbackend
             port:
               number: 8080
       - path: /eureka

@@ -5,38 +5,57 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="859d2a8d-aac7-4fdd-b876-538f9866ed2c" name="Changes" comment="Test Push">
-      <change afterPath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Config/ExternalPropertiesConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/config/ExternalPropertiesConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/AuthServerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/AuthServerApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Config/ApplicationConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Config/ApplicationConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EurekaServer/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/EurekaServer/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-server/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-server/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Config/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Config/JwtAuthenticationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Config/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Controller/JwtValidationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Controller/JwtValidationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/DTO/AuthResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/DTO/AuthResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/DTO/TokenValidationResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/DTO/TokenValidationResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Repository/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Service/JwtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Service/JwtService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-server/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/client/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/client/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/client/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/eslint.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/eslint.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/pnpm-lock.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/postcss.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ui/button.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ui/button.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ui/card.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ui/card.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ui/input.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ui/input.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ui/table.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ui/tabs.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ui/toaster.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/lib/api-client.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/lib/auth-context.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/lib/auth-service.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/lib/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/lib/utils.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/tailwind.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/vite.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/k8s/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/k8s/backend/app-secrets.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/backend/app-secrets.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/k8s/backend/auth-server-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/backend/auth-server-deployment.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/k8s/backend/backend-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/backend/backend-deployment.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/k8s/backend/eureka-server-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/backend/eureka-server-deployment.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/k8s/db/mysql-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/db/mysql-deployment.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/k8s/frontend/frontend-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/frontend/frontend-deployment.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/k8s/ingress/ingress.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/ingress/ingress.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/local-deployment.sh" beforeDir="false" afterPath="$PROJECT_DIR$/local-deployment.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pmbackend/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pmbackend/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pmbackend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/component/PasswordComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/component/PasswordComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/config/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/config/WebSecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/controller/PasswordController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/controller/PasswordController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/entity/Passwords.java" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/entity/Passwords.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/repository/PasswordRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/repository/PasswordRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/service/PasswordService.java" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/service/PasswordService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pmbackend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -51,6 +70,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -83,10 +103,14 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Maven.EurekaServer [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.EurekaServer [package].executor&quot;: &quot;Run&quot;,
     &quot;Maven.auth-server [clean].executor&quot;: &quot;Run&quot;,
     &quot;Maven.auth-server [install].executor&quot;: &quot;Run&quot;,
     &quot;Maven.auth-server [org.apache.maven.plugins:maven-clean-plugin:3.4.1:clean].executor&quot;: &quot;Run&quot;,
     &quot;Maven.auth-server [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.pmbackend [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.pmbackend [package].executor&quot;: &quot;Run&quot;,
     &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
     &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
     &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
@@ -97,7 +121,7 @@
     &quot;Spring Boot.EurekaServerApplication.executor&quot;: &quot;Run&quot;,
     &quot;Spring Boot.PmbackendApplication.executor&quot;: &quot;Run&quot;,
     &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;snehil&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/snehi/OneDrive - Shri Vile Parle Kelavani Mandal/MPSTME/Course Work/Third Year/Sem 6/Subjects/CS/Practical/Code&quot;,
@@ -132,7 +156,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.AuthServerApplication">
+  <component name="RunManager" selected="Spring Boot.EurekaServerApplication">
     <configuration name="AuthServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="auth-server" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.auth_server.AuthServerApplication" />
@@ -188,6 +212,9 @@
       <workItem from="1743839348272" duration="4530000" />
       <workItem from="1744004394609" duration="8398000" />
       <workItem from="1744022739820" duration="755000" />
+      <workItem from="1744543776842" duration="14047000" />
+      <workItem from="1744573561253" duration="5563000" />
+      <workItem from="1744581569661" duration="2022000" />
     </task>
     <task id="LOCAL-00001" summary="EurekaServer">
       <option name="closed" value="true" />
@@ -235,6 +262,18 @@
     <MESSAGE value="Added env.properties file to Spring Application Root" />
     <MESSAGE value="Test Push" />
     <option name="LAST_COMMIT_MESSAGE" value="Test Push" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-field">
+          <url>file://$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/DTO/TokenValidationResponse.java</url>
+          <line>11</line>
+          <properties field="role" class="com.example.auth_server.DTO.TokenValidationResponse" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

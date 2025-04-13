@@ -4,8 +4,6 @@ import com.example.auth_server.DTO.AuthResponse;
 import com.example.auth_server.DTO.AuthRequest;
 import com.example.auth_server.DTO.PasswordVerificationRequest;
 import com.example.auth_server.DTO.PasswordVerificationResponse;
-import com.example.auth_server.DTO.TokenValidationRequest;
-import com.example.auth_server.DTO.TokenValidationResponse;
 import com.example.auth_server.Entity.User;
 import com.example.auth_server.Service.JwtService;
 import com.example.auth_server.Service.UserService;
@@ -48,7 +46,13 @@ public class AuthController {
         // Generate token using UserDetails
         String jwtToken = jwtService.generateToken(userDetails);
 
-        return ResponseEntity.ok(new AuthResponse(savedUser.getId(), savedUser.getUsername(), savedUser.getEmail(), jwtToken));
+        return ResponseEntity.ok(new AuthResponse(
+            savedUser.getId(), 
+            savedUser.getUsername(), 
+            savedUser.getEmail(), 
+            jwtToken,
+            savedUser.getRole())
+        );
     }
 
     @PostMapping("/login")
@@ -70,45 +74,15 @@ public class AuthController {
             // Generate token
             String jwtToken = jwtService.generateToken(userDetails);
 
-            return ResponseEntity.ok(new AuthResponse(user.getId(), user.getUsername(), user.getEmail(), jwtToken));
+            return ResponseEntity.ok(new AuthResponse(
+                user.getId(), 
+                user.getUsername(), 
+                user.getEmail(), 
+                jwtToken,
+                user.getRole())
+            );
         } else {
             throw new UsernameNotFoundException("Invalid user credentials");
-        }
-    }
-    
-    @PostMapping("/validate-token")
-    public ResponseEntity<TokenValidationResponse> validateToken(@RequestBody TokenValidationRequest request) {
-        String token = request.getToken();
-        
-        try {
-            // Extract username (email) from token
-            String email = jwtService.extractUsername(token);
-            
-            // Check if user exists
-            User user = userService.findByEmail(email)
-                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-            
-            // Get UserDetails for token validation
-            UserDetails userDetails = userService.loadUserByUsername(email);
-            
-            // Validate token
-            boolean isValid = jwtService.isTokenValid(token, userDetails);
-            
-            TokenValidationResponse response = new TokenValidationResponse();
-            response.setValid(isValid);
-            
-            if (isValid) {
-                response.setEmail(email);
-                response.setUserId(user.getId());
-                response.setUsername(user.getUsername());
-            }
-            
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            TokenValidationResponse response = new TokenValidationResponse();
-            response.setValid(false);
-            response.setMessage("Invalid token: " + e.getMessage());
-            return ResponseEntity.ok(response);
         }
     }
     

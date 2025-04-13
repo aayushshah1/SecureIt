@@ -1,15 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
 import App from './App.jsx'
 import './index.css'
-import { Toaster } from './components/ui/toaster.jsx'
-import { AuthProvider } from './lib/auth-context.jsx'
+import { ThemeProvider } from './components/ui/theme-provider.jsx'
+import { Toaster } from '@/components/ui/sonner.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <AuthProvider>
-      <Toaster />
-      <App />
-    </AuthProvider>
+    <BrowserRouter>
+      <ThemeProvider defaultTheme="system" storageKey="secureit-theme">
+        <App />
+        <Toaster richColors position="top-right" />
+      </ThemeProvider>
+    </BrowserRouter>
   </React.StrictMode>,
 )

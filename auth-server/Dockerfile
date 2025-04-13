@@ -1,11 +1,9 @@
-FROM openjdk:25-slim-bullseye
+FROM openjdk:23-slim
 
-VOLUME /tmp
+VOLUME /app
 
 EXPOSE 8080
 
-ARG JAR_FILE=target/auth-server.jar
+COPY target/auth-server-0.0.1-SNAPSHOT.jar /app/auth_server.jar
 
-ADD ${JAR_FILE} app.jar
-
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+ENTRYPOINT ["java", "-jar","/app/auth_server.jar"]

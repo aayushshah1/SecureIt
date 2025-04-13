@@ -1,13 +1,3 @@
-# MySQL Credentials Secret
-apiVersion: v1
-kind: Secret
-metadata:
-  name: mysql-secret
-type: Opaque
-data:
-  username: cm9vdA==    # Base64 encoded 'root'
-  password: dGVzdEAxMjM= # Base64 encoded 'test@123'
----
 # Persistent Volume Claim for MySQL data
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -41,11 +31,11 @@ spec:
           image: mysql:8.0
           # Environment variables for MySQL configuration
           env:
-            - name: MYSQL_ROOT_PASSWORD  # Set root password from secret
+            - name: MYSQL_ROOT_PASSWORD # Set root password from app-secrets
               valueFrom:
                 secretKeyRef:
-                  name: mysql-secret
-                  key: password
+                  name: app-secrets # Use the central app-secrets
+                  key: db-password # Use the key 'db-password' from app-secrets
             - name: MYSQL_DATABASE      # Create initial database
               value: password_manager
           ports:
@@ -61,7 +51,7 @@ spec:
           persistentVolumeClaim:
             claimName: mysql-pvc
 ---
-# Headless Service for MySQL
+# Headless Service for MySQL (ClusterIP: None)
 apiVersion: v1
 kind: Service
 metadata:
@@ -72,4 +62,4 @@ spec:
       targetPort: 3306 # Container port
   selector:
     app: mysql
-  clusterIP: None      # Headless service for direct pod access
+  clusterIP: None      # Headless service for direct pod access by DNS name 'mysql'

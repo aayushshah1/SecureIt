@@ -12,12 +12,12 @@ data:
     # Database configuration
     spring.datasource.url=jdbc:mysql://mysql:3306/password_manager
     spring.datasource.username=root
-    spring.datasource.password=test@123
+    # spring.datasource.password=root 
     spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
     # JPA/Hibernate settings
     spring.jpa.hibernate.ddl-auto=update
-    spring.jpa.show-sql=true
+    spring.jpa.show-sql=true # Set to false in production
 
     # Server configuration
     server.port=8080
@@ -25,15 +25,15 @@ data:
     # Eureka configuration
     eureka.client.service-url.defaultZone=http://eureka-server:8761/eureka/
     
-    # Auth server configuration
-    auth.server.url=http://auth-server:8080
+    # Auth server configuration (using internal service name and port)
+    auth.server.url=http://auth-server:8080 
     
-    # Password encryption secret
+    # Password encryption secret placeholder (value injected via env var PASSWORD_ENCRYPTION_SECRET)
     password.encryption.secret=${PASSWORD_ENCRYPTION_SECRET}
     
     # Prometheus backend endpoints 
-    management.endpoints.web.exposure.include=*
-    management.endpoint.health.show-details=always
+    management.endpoints.web.exposure.include=* # Be more specific in production (e.g., health,prometheus)
+    management.endpoint.health.show-details=always # Consider 'when-authorized' in production
     management.endpoint.prometheus.enabled=true
     management.metrics.export.prometheus.enabled=true
 ---
@@ -61,29 +61,40 @@ spec:
             - containerPort: 8080 # Spring Boot application port
           # Environment configuration
           env:
-            - name: SPRING_CONFIG_LOCATION
-              value: "/app/config/application.properties"
-            - name: PASSWORD_ENCRYPTION_SECRET
+            # Point Spring Boot to the mounted config file
+            - name: SPRING_CONFIG_LOCATION 
+              value: "/app/config/application.properties" 
+            # Inject password encryption secret
+            - name: PASSWORD_ENCRYPTION_SECRET 
               valueFrom:
                 secretKeyRef:
                   name: app-secrets
-                  key: password-encryption-secret
+                  key: password-encryption-secret # Key name in app-secrets
+            # Inject database password (Spring Boot automatically picks up SPRING_DATASOURCE_PASSWORD)
+            - name: SPRING_DATASOURCE_PASSWORD 
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: db-password # Key name in app-secrets
           # Mount ConfigMap as a file
           volumeMounts:
             - name: config-volume
-              mountPath: /app/config/application.properties
-              subPath: application.properties
+              mountPath: /app/config # Mount the directory
           # Health check
           readinessProbe:
-            tcpSocket:
+            httpGet:
+              path: /actuator/health
               port: 8080
-            initialDelaySeconds: 10 # Wait before first probe
-            periodSeconds: 5 # Probe interval
+            initialDelaySeconds: 20 # Wait longer for backend
+            periodSeconds: 10 # Probe interval
       # Volumes configuration
       volumes:
         - name: config-volume
           configMap:
             name: backend-config
+            items: # Specify the file to mount from the ConfigMap data
+            - key: application.properties
+              path: application.properties
 ---
 # Backend Service for internal communication
 apiVersion: v1
@@ -97,5 +108,5 @@ spec:
     - protocol: TCP
       port: 8080 # Service port
       targetPort: 8080 # Container port
-      nodePort: 30081
-  type: NodePort
+      nodePort: 30081 # Expose on NodePort
+  type: NodePort # Use NodePort to match local-deployment.sh output

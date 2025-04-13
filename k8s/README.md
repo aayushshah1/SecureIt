@@ -1,108 +1,138 @@
-# Password Manager - Minikube Deployment
+# Password Manager - Kubernetes Local Deployment
 
-This guide provides step-by-step instructions to build, deploy, and manage the Password Manager application using Minikube, Kubernetes, and Prometheus.
+This guide provides step-by-step instructions to build, deploy, and manage the SecureIt Password Manager application using Kubernetes (via Minikube or Docker Desktop) based on the `local-deployment.sh` script.
 
 ## Prerequisites
 
 Ensure you have the following installed:
 
 - [Docker](https://www.docker.com/get-started)
-- [Minikube](https://minikube.sigs.k8s.io/docs/start/)
+- A local Kubernetes cluster (e.g., [Minikube](https://minikube.sigs.k8s.io/docs/start/) or Docker Desktop Kubernetes)
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 
 ---
 
-## 1. Build Docker Images
+## 1. Deployment Script
 
-Run the following commands to build the frontend and backend Docker images:
+The primary way to deploy locally is using the `local-deployment.sh` script located in the project root.
 
 ```sh
-# Build the frontend image
-docker build -t pmfrontend:latest ./client
+# Navigate to the project root directory
+cd .. 
 
-# Build the backend image
+# Run the deployment script
+./local-deployment.sh 
+```
+
+This script performs the following actions:
+- Builds the Java projects (Eureka, Auth Server, PM Backend).
+- Builds the Frontend project.
+- Builds Docker images for all microservices.
+- Applies Kubernetes configurations from the `k8s` directory in the correct order:
+    - `k8s/backend/app-secrets.yaml`
+    - `k8s/db/mysql-deployment.yaml`
+    - `k8s/backend/eureka-server-deployment.yaml`
+    - `k8s/backend/auth-server-deployment.yaml`
+    - `k8s/backend/backend-deployment.yaml`
+    - `k8s/frontend/frontend-deployment.yaml`
+    - `k8s/ingress/ingress.yaml`
+
+---
+
+## 2. Manual Deployment Steps (Alternative)
+
+If you prefer manual deployment:
+
+### a. Build Docker Images
+
+Navigate to the project root and run:
+
+```sh
+# Build Eureka Server image
+docker build -t eureka-server:latest ./EurekaServer
+
+# Build Auth Server image
+docker build -t auth-server:latest ./auth-server
+
+# Build PM Backend image
 docker build -t pmbackend:latest ./pmbackend
+
+# Build Frontend image
+docker build -t frontend:latest ./client
 ```
+*Note: Ensure your Kubernetes environment can access these local images (e.g., using `minikube image load <image-name>` or configuring Docker Desktop).*
 
----
+### b. Apply Kubernetes Manifests
 
-## 2. Start Minikube Cluster
-
-Start Minikube and verify the cluster is running:
+Navigate to the `k8s` directory (`cd k8s`) and apply the manifests in order:
 
 ```sh
-minikube start
-kubectl get pods
-cd k8s
-```
+# Apply Secrets (Ensure this file exists and is configured)
+kubectl apply -f backend/app-secrets.yaml
 
----
-
-## 3. Deploy Services to Minikube
-
-Apply Kubernetes configurations for MySQL, Prometheus, backend, and frontend.
-
-```sh
 # Deploy MySQL database
-kubectl apply -f mysql-deployment.yaml
+kubectl apply -f db/mysql-deployment.yaml
+echo "Waiting for MySQL..." && sleep 20 # Adjust sleep time as needed
 
-# Apply Prometheus configuration
-kubectl apply -f prometheus-config.yaml
+# Deploy Eureka Server (Ensure this file exists)
+kubectl apply -f backend/eureka-server-deployment.yaml
+echo "Waiting for Eureka..." && sleep 15 # Adjust sleep time as needed
 
-# Deploy Prometheus
-kubectl apply -f prometheus-deployment.yaml
+# Deploy Auth Server (Ensure this file exists)
+kubectl apply -f backend/auth-server-deployment.yaml
 
-# Deploy backend service
-kubectl apply -f backend-deployment.yaml
+# Deploy PM Backend
+kubectl apply -f backend/backend-deployment.yaml
 
-# Deploy frontend service
-kubectl apply -f frontend-deployment.yaml
+# Deploy Frontend
+kubectl apply -f frontend/frontend-deployment.yaml
+
+# Deploy Ingress
+kubectl apply -f ingress/ingress.yaml
 ```
 
 ---
 
-## 4. Port Forwarding
+## 3. Accessing the Application
 
-To access the services, use the following port-forwarding commands:
+The `local-deployment.sh` script outputs the NodePort URLs:
+
+- **Frontend:** `http://localhost:30080`
+- **PM Backend API:** `http://localhost:30081` (Primarily for direct testing)
+- **Auth Server API:** `http://localhost:30082` (Primarily for direct testing)
+- **Eureka Server Dashboard:** `http://localhost:30761`
+
+If using the Ingress (requires setting up `secureit.local` in your hosts file or using `minikube tunnel`):
+
+- **Frontend:** `http://secureit.local/`
+- **Auth API:** `http://secureit.local/api/auth/`
+- **Backend API:** `http://secureit.local/api/`
+- **Eureka:** `http://secureit.local/eureka/`
+
+---
+
+## 4. Stopping and Cleaning Up
+
+To remove all deployed resources:
 
 ```sh
-# Port forward backend (Spring Boot) on port 8080
-kubectl port-forward pod/backend-6b9d689594-hvntv 8080:8080
+# Navigate to the k8s directory
+cd k8s 
 
-# Port forward frontend (Next.js) on port 3000
-kubectl port-forward pod/pmfrontend-67f64f5b66-zt4wj 3000:80
-
-# Port forward Prometheus monitoring on port 9090
-kubectl port-forward pod/prometheus-67bb7f88-jct2h 9090:9090
+kubectl delete -f ingress/ingress.yaml
+kubectl delete -f frontend/frontend-deployment.yaml
+kubectl delete -f backend/backend-deployment.yaml
+kubectl delete -f backend/auth-server-deployment.yaml # If file exists
+kubectl delete -f backend/eureka-server-deployment.yaml # If file exists
+kubectl delete -f db/mysql-deployment.yaml
+kubectl delete -f backend/app-secrets.yaml # If file exists
 ```
 
----
-
-## 5. Accessing the Application
-
-- **Frontend:** Open `http://localhost:3000`
-- **Backend API:** `http://localhost:8080`
-- **Prometheus Dashboard:** `http://localhost:9090`
-
----
-
-## 6. Stopping and Cleaning Up
-
-To stop Minikube and delete the cluster:
-
+To stop/delete your local Kubernetes cluster:
 ```sh
+# Example for Minikube
 minikube stop
-minikube delete
-```
-
-To remove all deployments:
-
-```sh
-kubectl delete -f mysql-deployment.yaml
-kubectl delete -f prometheus-config.yaml
-kubectl delete -f prometheus-deployment.yaml
-kubectl delete -f backend-deployment.yaml
-kubectl delete -f frontend-deployment.yaml
+minikube delete 
 ```
 
 ---
@@ -110,17 +140,9 @@ kubectl delete -f frontend-deployment.yaml
 ## Troubleshooting
 
 - Run `kubectl get pods` to check the status of pods.
-- Run `kubectl logs <pod-name>` for debugging logs.
+- Run `kubectl logs <pod-name>` for debugging logs (e.g., `kubectl logs deployment/backend`).
 - If a pod fails to start, check events using `kubectl describe pod <pod-name>`.
+- Verify service discovery with `kubectl get services`.
+- Check ingress status with `kubectl get ingress`.
 
 ---
-
-## Notes
-
-- Ensure Minikube has sufficient resources allocated (CPU, RAM, Disk).
-- Consider using `minikube dashboard` for visual monitoring.
-- Use `kubectl get services` to verify service deployments.
-
----
-
-This setup enables you to run a password manager application with monitoring capabilities using Kubernetes on a Minikube cluster. 🚀

@@ -7,8 +7,8 @@ echo "Building and Deploying SecureIt Password Manager"
 echo "==========================================================="
 
 # Set environment variables
-export JWT_SECRET="secureit-jwt-secret-key-local-dev"
-export PASSWORD_ENCRYPTION_SECRET="password-encryption-secret-key-secure-local-dev"
+export JWT_SECRET="5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437"
+export PASSWORD_ENCRYPTION_SECRET="7dxreSamXN8F03/fxzcLXUPZgGkUYuoztfR+FJeVqlE="
 export DB_PASSWORD="root"
 
 # Build the Java projects

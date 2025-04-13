@@ -25,38 +25,30 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: eureka-server
+  labels:
+    app: eureka-server
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: eureka-server
-  replicas: 1
   template:
     metadata:
       labels:
         app: eureka-server
     spec:
       containers:
-        - name: eureka-server
-          image: eureka-server:latest
-          imagePullPolicy: Never # For local development
-          ports:
-            - containerPort: 8761
-          env:
-            - name: SPRING_CONFIG_LOCATION
-              value: "/app/config/application.properties"
-          volumeMounts:
-            - name: config-volume
-              mountPath: /app/config/application.properties
-              subPath: application.properties
-          readinessProbe:
-            tcpSocket:
-              port: 8761
-            initialDelaySeconds: 20
-            periodSeconds: 5
-      volumes:
-        - name: config-volume
-          configMap:
-            name: eureka-server-config
+      - name: eureka-server
+        image: eureka-server:latest # Matches the image built in local-deployment.sh
+        imagePullPolicy: Never # For local development
+        ports:
+        - containerPort: 8761 # Default Eureka port
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8761
+          initialDelaySeconds: 20
+          periodSeconds: 10
 ---
 # Eureka Server Service
 apiVersion: v1
@@ -67,8 +59,9 @@ spec:
   selector:
     app: eureka-server
   ports:
-    - protocol: TCP
-      port: 8761
-      targetPort: 8761
-      nodePort: 30761
-  type: NodePort
+  - name: http
+    protocol: TCP
+    port: 8761       # Service port
+    targetPort: 8761 # Container port
+    nodePort: 30761  # Expose on NodePort for direct access if needed
+  type: NodePort # Use NodePort to match local-deployment.sh output, ClusterIP is also common

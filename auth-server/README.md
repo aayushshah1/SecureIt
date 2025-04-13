@@ -31,6 +31,32 @@ Modify `application.properties` or `application.yml` to set up database configur
 
 ### Run the Application
 
+## Role-Based Access Control (RBAC)
+
+The system supports two roles:
+- **USER**: Regular users who can manage only their own passwords
+- **ADMIN**: Administrative users who can manage all users and passwords
+
+### Role Permissions
+
+#### USER Role
+- Access and manage own user profile
+- Create, read, update, and delete own passwords
+- Cannot access other users' data
+
+#### ADMIN Role
+- Access and manage all user profiles
+- Create, read, update, and delete all passwords
+- Promote or demote users (change roles)
+- View system-wide information
+
+### JWT Token Structure
+
+JWT tokens include the following claims:
+- `sub`: User email/username
+- `iat`: Token issue timestamp
+- `exp`: Token expiration timestamp
+- `roles`: List of user roles
 
 ## API Endpoints
 
@@ -45,6 +71,27 @@ POST /api/auth/register
 POST /api/auth/login
 ```
 
+### JWT Validation
+**Validate a JWT token**
+```shell
+POST /api/jwt/validate
+```
+
+**Check if a token is expired**
+```shell
+GET /api/jwt/check-expiration
+```
+
+**Verify user access to resources**
+```shell
+GET /api/jwt/verify-user-access
+```
+
+**Check user role**
+```shell
+GET /api/jwt/check-role
+```
+
 ### Password Management
 **Retrieve stored passwords (Secure access)**
 ```shell
@@ -55,7 +102,6 @@ GET /api/passwords
 ```shell
 POST /api/passwords
 ```
-
 
 ## Security Measures
 - **BCrypt Password Hashing**

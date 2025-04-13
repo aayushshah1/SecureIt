@@ -1,11 +1,9 @@
-FROM openjdk:25-slim-bullseye
+FROM openjdk:23-slim
 
-VOLUME /tmp
+VOLUME /app
 
 EXPOSE 8080
 
-ARG JAR_FILE=target/pmbackend.jar
+COPY target/pmbackend.jar /app/pmbackend.jar
 
-ADD ${JAR_FILE} app.jar
-
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+ENTRYPOINT ["java", "-jar","/app/pmbackend.jar"]
