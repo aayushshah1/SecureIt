@@ -3,6 +3,9 @@ package com.msaproject.pmbackend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 @Getter
@@ -19,7 +22,7 @@ public class User {
     @Column(nullable = false)
     private String username;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
@@ -30,5 +33,5 @@ public class User {
     private String lastName;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private java.util.List<Passwords> passwords = new java.util.ArrayList<>();
+    private List<Passwords> passwords = new ArrayList<>();
 }

@@ -1,40 +1,75 @@
+# Frontend React Application ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+data:
+  nginx.conf: |
+    server {
+      listen 80;
+      root /usr/share/nginx/html;
+      index index.html;
+      
+      # Handle SPA routing
+      location / {
+        try_files $uri $uri/ /index.html;
+      }
+      
+      # Proxy API requests to the backend services
+      location /api/auth/ {
+        proxy_pass http://auth-server:8081/api/auth/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+      }
+      
+      location /api/ {
+        proxy_pass http://backend:8080/api/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+      }
+    }
+---
+# Frontend React Application Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pmfrontend
+  name: frontend
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: pmfrontend
+      app: frontend
+  replicas: 1
   template:
     metadata:
       labels:
-        app: pmfrontend
+        app: frontend
     spec:
       containers:
-        - name: pmfrontend
-          image: pmfrontend:latest
-          imagePullPolicy: IfNotPresent
+        - name: frontend
+          image: frontend:latest
+          imagePullPolicy: Never # For local development
           ports:
             - containerPort: 80
-          env:
-            - name: REACT_APP_API_URL
-              value: "http://backend:8080"
-            - name: BEYLA_TARGET_ADRESS
-              value: ":80"
-
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/conf.d/default.conf
+              subPath: nginx.conf
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: frontend-config
 ---
+# Frontend Service
 apiVersion: v1
 kind: Service
 metadata:
-  name: pmfrontend
+  name: frontend
 spec:
   selector:
-    app: pmfrontend
-  type: NodePort
+    app: frontend
   ports:
     - protocol: TCP
       port: 80
       targetPort: 80
-      nodePort: 30090
+      nodePort: 30080
+  type: NodePort

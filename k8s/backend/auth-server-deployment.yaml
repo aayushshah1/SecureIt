@@ -1,0 +1,94 @@
+# ConfigMap for auth-server properties
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auth-server-config
+data:
+  # Spring Boot configuration properties
+  application.properties: |
+    # Application name
+    spring.application.name=auth-server
+
+    # Database configuration - shares the same DB as the backend
+    spring.datasource.url=jdbc:mysql://mysql:3306/password_manager
+    spring.datasource.username=root
+    spring.datasource.password=test@123
+    spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+    # JPA/Hibernate settings
+    spring.jpa.hibernate.ddl-auto=update
+    spring.jpa.show-sql=true
+
+    # Server configuration
+    server.port=8080
+    
+    # Eureka configuration
+    eureka.client.service-url.defaultZone=http://eureka-server:8761/eureka
+    
+    # JWT Configuration
+    jwt.secret=${JWT_SECRET}
+    jwt.expiration=86400000
+    
+    # Actuator endpoints for monitoring
+    management.endpoints.web.exposure.include=*
+    management.endpoint.health.show-details=always
+    management.endpoint.prometheus.enabled=true
+    management.metrics.export.prometheus.enabled=true
+---
+# Auth-server Spring Boot Application Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-server
+spec:
+  selector:
+    matchLabels:
+      app: auth-server
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: auth-server
+    spec:
+      containers:
+        - name: auth-server
+          image: auth-server:latest
+          imagePullPolicy: Never # For local development
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_CONFIG_LOCATION
+              value: "/app/config/application.properties"
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: jwt-secret
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app/config/application.properties
+              subPath: application.properties
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 5
+      volumes:
+        - name: config-volume
+          configMap:
+            name: auth-server-config
+---
+# Auth-server Service for internal communication
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-server
+spec:
+  selector:
+    app: auth-server
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30082
+  type: NodePort

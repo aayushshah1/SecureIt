@@ -21,9 +21,21 @@ data:
 
     # Server configuration
     server.port=8080
-    #prometheus backend endpoints 
+    
+    # Eureka configuration
+    eureka.client.service-url.defaultZone=http://eureka-server:8761/eureka/
+    
+    # Auth server configuration
+    auth.server.url=http://auth-server:8080
+    
+    # Password encryption secret
+    password.encryption.secret=${PASSWORD_ENCRYPTION_SECRET}
+    
+    # Prometheus backend endpoints 
     management.endpoints.web.exposure.include=*
     management.endpoint.health.show-details=always
+    management.endpoint.prometheus.enabled=true
+    management.metrics.export.prometheus.enabled=true
 ---
 # Backend Spring Boot Application Deployment
 apiVersion: apps/v1
@@ -51,6 +63,11 @@ spec:
           env:
             - name: SPRING_CONFIG_LOCATION
               value: "/app/config/application.properties"
+            - name: PASSWORD_ENCRYPTION_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: password-encryption-secret
           # Mount ConfigMap as a file
           volumeMounts:
             - name: config-volume

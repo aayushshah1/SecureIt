@@ -3,18 +3,19 @@ package com.example.auth_server.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Collections;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Entity
+@Table(name = "users") // Same table name as in pmbackend
 @Getter
 @Setter
-@Entity
-@Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class User implements UserDetails {
 
     @Id
@@ -24,39 +25,48 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String username;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
     private String password;
 
     private String firstName;
-
+    
     private String lastName;
 
+    // We don't map the passwords relationship here since auth-server doesn't need it
+    // But it uses the same table structure
+
+    @Override
+    public String getUsername() {
+        // Return email as the username for UserDetails implementation
+        // This ensures JWT tokens use email as the subject consistently
+        return email;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return Collections.singletonList(new SimpleGrantedAuthority("USER"));
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+        return true;
     }
 }

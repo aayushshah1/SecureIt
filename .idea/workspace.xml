@@ -4,7 +4,41 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="859d2a8d-aac7-4fdd-b876-538f9866ed2c" name="Changes" comment="Added env.properties file to Spring Application Root" />
+    <list default="true" id="859d2a8d-aac7-4fdd-b876-538f9866ed2c" name="Changes" comment="Test Push">
+      <change afterPath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Config/ExternalPropertiesConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/config/ExternalPropertiesConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/AuthServerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/AuthServerApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Config/ApplicationConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Config/ApplicationConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Config/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Config/JwtAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Service/JwtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Service/JwtService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-server/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/client/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/k8s/backend/backend-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/backend/backend-deployment.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/k8s/frontend/frontend-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/frontend/frontend-deployment.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/k8s/ingress/ingress.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/ingress/ingress.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/local-deployment.sh" beforeDir="false" afterPath="$PROJECT_DIR$/local-deployment.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pmbackend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/component/PasswordComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/component/PasswordComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/controller/PasswordController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/controller/PasswordController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/entity/Passwords.java" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/entity/Passwords.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/repository/PasswordRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/repository/PasswordRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/service/PasswordService.java" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/service/PasswordService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pmbackend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/src/main/resources/application.properties" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -12,6 +46,13 @@
   </component>
   <component name="ComposerSettings">
     <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -42,6 +83,10 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Maven.auth-server [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.auth-server [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.auth-server [org.apache.maven.plugins:maven-clean-plugin:3.4.1:clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.auth-server [package].executor&quot;: &quot;Run&quot;,
     &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
     &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
     &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
@@ -50,6 +95,7 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;Spring Boot.AuthServerApplication.executor&quot;: &quot;Run&quot;,
     &quot;Spring Boot.EurekaServerApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.PmbackendApplication.executor&quot;: &quot;Run&quot;,
     &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
@@ -63,9 +109,19 @@
     &quot;org.rust.first.attach.projects&quot;: &quot;true&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
     &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.annotationProcessors&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Documents\Coding Projects\SecureIt\pmbackend\src\main\resources" />
+      <recent name="D:\Documents\Coding Projects\SecureIt\auth-server\src\main\resources" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.msaproject.pmbackend.config" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="configurationTypes">
       <set>
@@ -126,7 +182,12 @@
       <workItem from="1741629382710" duration="2129000" />
       <workItem from="1741665114105" duration="2357000" />
       <workItem from="1741754662246" duration="58000" />
-      <workItem from="1741770411768" duration="341000" />
+      <workItem from="1741770411768" duration="1414000" />
+      <workItem from="1743742192053" duration="1317000" />
+      <workItem from="1743837822622" duration="1129000" />
+      <workItem from="1743839348272" duration="4530000" />
+      <workItem from="1744004394609" duration="8398000" />
+      <workItem from="1744022739820" duration="755000" />
     </task>
     <task id="LOCAL-00001" summary="EurekaServer">
       <option name="closed" value="true" />
@@ -144,7 +205,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741770575822</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Test Push">
+      <option name="closed" value="true" />
+      <created>1741770812645</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1741770812645</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -164,6 +233,11 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="EurekaServer" />
     <MESSAGE value="Added env.properties file to Spring Application Root" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added env.properties file to Spring Application Root" />
+    <MESSAGE value="Test Push" />
+    <option name="LAST_COMMIT_MESSAGE" value="Test Push" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

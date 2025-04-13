@@ -56,3 +56,5 @@ env.properties
 # Ignore database-related files
 h2-console/
 data/
+
+.github

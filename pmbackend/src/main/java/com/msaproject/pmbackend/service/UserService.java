@@ -3,6 +3,7 @@ package com.msaproject.pmbackend.service;
 import com.msaproject.pmbackend.entity.User;
 import com.msaproject.pmbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -25,6 +29,8 @@ public class UserService {
         if (userRepository.existsByUsername(user.getUsername())) {
             throw new RuntimeException("Username already exists");
         }
+        // Hash the master password before saving
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
@@ -34,9 +40,13 @@ public class UserService {
 
         user.setUsername(userDetails.getUsername());
         user.setEmail(userDetails.getEmail());
-        user.setPassword(userDetails.getPassword());
         user.setFirstName(userDetails.getFirstName());
         user.setLastName(userDetails.getLastName());
+        
+        // Only update password if it's provided
+        if (userDetails.getPassword() != null && !userDetails.getPassword().isEmpty()) {
+            user.setPassword(passwordEncoder.encode(userDetails.getPassword()));
+        }
 
         return userRepository.save(user);
     }
@@ -49,5 +59,15 @@ public class UserService {
 
     public Optional<User> getUserById(Long id) {
         return userRepository.findById(id);
+    }
+
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+    
+    public boolean validateUserPassword(String email, String rawPassword) {
+        Optional<User> user = getUserByEmail(email);
+        return user.map(u -> passwordEncoder.matches(rawPassword, u.getPassword()))
+                .orElse(false);
     }
 }

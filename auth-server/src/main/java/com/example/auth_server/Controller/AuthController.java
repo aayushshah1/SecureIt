@@ -2,6 +2,10 @@ package com.example.auth_server.Controller;
 
 import com.example.auth_server.DTO.AuthResponse;
 import com.example.auth_server.DTO.AuthRequest;
+import com.example.auth_server.DTO.PasswordVerificationRequest;
+import com.example.auth_server.DTO.PasswordVerificationResponse;
+import com.example.auth_server.DTO.TokenValidationRequest;
+import com.example.auth_server.DTO.TokenValidationResponse;
 import com.example.auth_server.Entity.User;
 import com.example.auth_server.Service.JwtService;
 import com.example.auth_server.Service.UserService;
@@ -12,6 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +34,9 @@ public class AuthController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@RequestBody User user) {
@@ -65,6 +73,65 @@ public class AuthController {
             return ResponseEntity.ok(new AuthResponse(user.getId(), user.getUsername(), user.getEmail(), jwtToken));
         } else {
             throw new UsernameNotFoundException("Invalid user credentials");
+        }
+    }
+    
+    @PostMapping("/validate-token")
+    public ResponseEntity<TokenValidationResponse> validateToken(@RequestBody TokenValidationRequest request) {
+        String token = request.getToken();
+        
+        try {
+            // Extract username (email) from token
+            String email = jwtService.extractUsername(token);
+            
+            // Check if user exists
+            User user = userService.findByEmail(email)
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+            
+            // Get UserDetails for token validation
+            UserDetails userDetails = userService.loadUserByUsername(email);
+            
+            // Validate token
+            boolean isValid = jwtService.isTokenValid(token, userDetails);
+            
+            TokenValidationResponse response = new TokenValidationResponse();
+            response.setValid(isValid);
+            
+            if (isValid) {
+                response.setEmail(email);
+                response.setUserId(user.getId());
+                response.setUsername(user.getUsername());
+            }
+            
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            TokenValidationResponse response = new TokenValidationResponse();
+            response.setValid(false);
+            response.setMessage("Invalid token: " + e.getMessage());
+            return ResponseEntity.ok(response);
+        }
+    }
+    
+    @PostMapping("/verify-password")
+    public ResponseEntity<PasswordVerificationResponse> verifyPassword(@RequestBody PasswordVerificationRequest request) {
+        try {
+            // Find user by email
+            User user = userService.findByEmail(request.getEmail())
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+            
+            // Verify password
+            boolean isValid = passwordEncoder.matches(request.getPassword(), user.getPassword());
+            
+            PasswordVerificationResponse response = new PasswordVerificationResponse();
+            response.setValid(isValid);
+            response.setUserId(user.getId());
+            
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            PasswordVerificationResponse response = new PasswordVerificationResponse();
+            response.setValid(false);
+            response.setMessage("Error verifying password: " + e.getMessage());
+            return ResponseEntity.ok(response);
         }
     }
 }
