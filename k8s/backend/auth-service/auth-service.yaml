@@ -1,0 +1,46 @@
+# auth-service Spring Boot Application Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-service
+  template:
+    metadata:
+      labels:
+        app: auth-service
+    spec:
+      containers:
+        - name: auth-service
+          image: pmauth-service:latest
+          imagePullPolicy: Never # For local development
+          ports:
+            - containerPort: 8761
+          env:
+            - name: SPRING_CONFIG_LOCATION
+              value: "classpath:/application.properties" # or adjust this path as needed
+          readinessProbe:
+            tcpSocket:
+              port: 8761
+            initialDelaySeconds: 10
+            periodSeconds: 5
+
+---
+# auth-service Service for internal communication
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+  namespace: default
+
+spec:
+  selector:
+    app: auth-service
+  ports:
+    - protocol: TCP
+      port: 8761 # Service port
+      targetPort: 8761 # Container's exposed port
+  type: ClusterIP

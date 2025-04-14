@@ -2,8 +2,8 @@ FROM openjdk:23-slim
 
 VOLUME /app
 
-EXPOSE 8761
+EXPOSE 8671
 
-COPY target/EurekaServer-0.0.1-SNAPSHOT.jar /app/app.jar
+COPY target/eureka.jar /app/eureka.jar
 
-ENTRYPOINT ["java", "-jar","/app/app.jar"]
+ENTRYPOINT ["java", "-jar","/app/eureka.jar"]

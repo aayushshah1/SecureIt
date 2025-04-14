@@ -1,3 +1,13 @@
+# MySQL Credentials Secret
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-secret
+type: Opaque
+data:
+  username: cm9vdA== # Base64 encoded 'root'
+  password: dGVzdEAxMjM= # Base64 encoded 'test@123'
+---
 # Persistent Volume Claim for MySQL data
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -5,10 +15,10 @@ metadata:
   name: mysql-pvc
 spec:
   accessModes:
-    - ReadWriteOnce  # Can be mounted as read-write by a single node
+    - ReadWriteOnce # Can be mounted as read-write by a single node
   resources:
     requests:
-      storage: 1Gi    # Request 1GB of persistent storage
+      storage: 1Gi # Request 1GB of persistent storage
 ---
 # MySQL Database Deployment
 apiVersion: apps/v1
@@ -20,7 +30,7 @@ spec:
     matchLabels:
       app: mysql
   strategy:
-    type: Recreate  # Ensure clean shutdown and startup
+    type: Recreate # Ensure clean shutdown and startup
   template:
     metadata:
       labels:
@@ -31,12 +41,12 @@ spec:
           image: mysql:8.0
           # Environment variables for MySQL configuration
           env:
-            - name: MYSQL_ROOT_PASSWORD # Set root password from app-secrets
+            - name: MYSQL_ROOT_PASSWORD # Set root password from secret
               valueFrom:
                 secretKeyRef:
-                  name: app-secrets # Use the central app-secrets
-                  key: db-password # Use the key 'db-password' from app-secrets
-            - name: MYSQL_DATABASE      # Create initial database
+                  name: mysql-secret
+                  key: password
+            - name: MYSQL_DATABASE # Create initial database
               value: password_manager
           ports:
             - containerPort: 3306
@@ -51,15 +61,15 @@ spec:
           persistentVolumeClaim:
             claimName: mysql-pvc
 ---
-# Headless Service for MySQL (ClusterIP: None)
+# Headless Service for MySQL
 apiVersion: v1
 kind: Service
 metadata:
   name: mysql
 spec:
   ports:
-    - port: 3306       # Service port
+    - port: 3306 # Service port
       targetPort: 3306 # Container port
   selector:
     app: mysql
-  clusterIP: None      # Headless service for direct pod access by DNS name 'mysql'
+  clusterIP: None # Headless service for direct pod access
