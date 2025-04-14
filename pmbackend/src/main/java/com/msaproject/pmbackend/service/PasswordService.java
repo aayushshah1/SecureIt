@@ -128,7 +128,9 @@ public class PasswordService {
         logger.info("User found: " + user.getUsername());
         
         List<Passwords> passwords = user.getPasswords();
-        // We don't decrypt passwords in the list view for security
+        passwords.forEach(password -> {
+            password.setValue(passwordComponent.decryptPassword(password.getValue()));
+        });
         
         logger.info("Passwords retrieved for user ID: " + userId);
         
