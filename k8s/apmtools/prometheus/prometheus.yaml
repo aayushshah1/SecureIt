@@ -23,6 +23,17 @@ data:
         metrics_path: "/actuator/prometheus"
         static_configs:
           - targets: ["backend:8080"]
+
+      - job_name: "eureka"
+        metrics_path: "/actuator/prometheus"
+        static_configs:
+          - targets: ["eureka:8761"]
+
+      - job_name: "pm.authserver"
+        metrics_path: "/actuator/prometheus"
+        static_configs:
+          - targets: ["pm.authserver:8081"]
+
 ---
 apiVersion: apps/v1
 kind: Deployment

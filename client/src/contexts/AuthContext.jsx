@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }) => {
 
     try {
       // API base URL - will be replaced with the actual Kubernetes service endpoint
-      const AUTH_API_BASE_URL = "http://localhost:8081/api/auth"
+      const AUTH_API_BASE_URL = "http://pm.authserver/api/auth"
       const response = await fetch(`${AUTH_API_BASE_URL}/login`, {
         method: 'POST',
         headers: {
@@ -97,7 +97,7 @@ export const AuthProvider = ({ children }) => {
 
     try {
       // API base URL - will be replaced with the actual Kubernetes service endpoint
-      const AUTH_API_BASE_URL = "http://localhost:8081/api/auth"
+      const AUTH_API_BASE_URL = "http://pm.authserver/api/auth"
 
       const response = await fetch(`${AUTH_API_BASE_URL}/register`, {
         method: 'POST',

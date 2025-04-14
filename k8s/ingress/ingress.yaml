@@ -61,3 +61,13 @@ spec:
                 name: eureka
                 port:
                   number: 8761
+    - host: pm.authserver
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-server
+                port:
+                  number: 8081

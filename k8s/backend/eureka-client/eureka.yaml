@@ -15,13 +15,21 @@ spec:
     spec:
       containers:
         - name: eureka
-          image: pmeureka:latest
+          image: eureka-server:latest
           imagePullPolicy: Never # For local development
           ports:
             - containerPort: 8761
           env:
-            - name: SPRING_CONFIG_LOCATION
-              value: "classpath:/application.properties" # or adjust this path as needed
+            - name: SPRING_APPLICATION_NAME
+              value: "eureka-server"
+            - name: SERVER_PORT
+              value: "8761"
+            - name: EUREKA_CLIENT_REGISTER_WITH_EUREKA
+              value: "false"
+            - name: EUREKA_CLIENT_FETCH_REGISTRY
+              value: "false"
+            - name: EUREKA_SERVER_ENABLE_SELF_PRESERVATION
+              value: "false"
           readinessProbe:
             tcpSocket:
               port: 8761
@@ -43,4 +51,5 @@ spec:
     - protocol: TCP
       port: 8761 # Service port
       targetPort: 8761 # Container's exposed port
-  type: ClusterIP
+      nodePort: 30761
+  type: NodePort

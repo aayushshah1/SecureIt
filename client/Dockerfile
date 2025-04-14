@@ -1,30 +1,16 @@
-FROM node:20-alpine as build
+FROM node:20-alpine
 
-# Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
+COPY package.json pnpm-lock.yaml ./
 
-# Install dependencies
-RUN npm ci
+RUN npm install -g pnpm && pnpm install
 
-# Copy source code
 COPY . .
 
-# Build the application
-RUN npm run build
+RUN pnpm build
 
-# Production stage
 FROM nginx:alpine
-
-# Copy built assets from the build stage
-COPY --from=build /app/dist /usr/share/nginx/html
-
-# Copy nginx config
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Expose port
+COPY --from=0 /app/dist /usr/share/nginx/html
 EXPOSE 80
-
 CMD ["nginx", "-g", "daemon off;"]
