@@ -1,0 +1,149 @@
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: secureit-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+      MYSQL_DATABASE: password_manager
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+    networks:
+      - secureit-network
+
+  # Eureka Discovery Server
+  eureka-server:
+    build:
+      context: ./EurekaServer
+      dockerfile: Dockerfile
+    container_name: secureit-eureka
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_SERVER_URL=http://eureka-server:8761/eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - secureit-network
+    depends_on:
+      mysql:
+        condition: service_healthy
+    restart: on-failure
+
+  # Auth Server
+  auth-server:
+    build:
+      context: ./auth-server
+      dockerfile: Dockerfile
+    container_name: secureit-auth
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - DB_URL=jdbc:mysql://mysql:3306/password_manager
+      - DB_USERNAME=${DB_USERNAME:-root}
+      - DB_PASSWORD=${DB_PASSWORD:-root}
+      - JWT_SECRET=${JWT_SECRET:-5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437}
+      - JWT_EXPIRATION=${JWT_EXPIRATION:-86400000}
+      - EUREKA_SERVER_URL=http://eureka-server:8761/eureka
+    ports:
+      - "8081:8081"
+    healthcheck:
+      test: ["CMD", "sh", "-c", "curl -s http://localhost:8081/actuator/health | grep -q UP && exit 0 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+      start_period: 60s
+    networks:
+      - secureit-network
+    depends_on:
+      - mysql
+      - eureka-server
+    entrypoint: ["sh", "-c", "sleep 50; exec java -Dspring.profiles.active=docker -jar /app/auth_server.jar"]
+    restart: on-failure
+
+  # Password Manager Backend
+  pmbackend:
+    build:
+      context: ./pmbackend
+      dockerfile: Dockerfile
+    container_name: secureit-pmbackend
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - DB_URL=jdbc:mysql://mysql:3306/password_manager
+      - DB_USERNAME=${DB_USERNAME:-root}
+      - DB_PASSWORD=${DB_PASSWORD:-root}
+      - PASSWORD_ENCRYPTION_SECRET=${PASSWORD_ENCRYPTION_SECRET:-dev-password-encryption-secret-change-in-production}
+      - EUREKA_SERVER_URL=http://eureka-server:8761/eureka
+      - AUTH_SERVER_URL=http://auth-server:8081
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-http://client,http://localhost:3000}
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "sh", "-c", "curl -f http://localhost:8080/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+      start_period: 60s
+    networks:
+      - secureit-network
+    depends_on:
+      - mysql
+      - eureka-server
+      - auth-server
+    entrypoint: ["sh", "-c", "sleep 50; exec java -Dspring.profiles.active=docker -jar /app/pmbackend.jar"]
+    restart: on-failure
+
+  # API Gateway
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    container_name: secureit-gateway
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_SERVER_URL=http://eureka-server:8761/eureka
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "sh", "-c", "curl -f http://localhost:8000/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+      start_period: 60s
+    networks:
+      - secureit-network
+    depends_on:
+      - eureka-server
+      - auth-server
+      - pmbackend
+    entrypoint: ["sh", "-c", "sleep 50; exec java -Dspring.profiles.active=docker -jar /app/api-gateway.jar"]
+    restart: on-failure
+
+  # Frontend (Nginx)
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: secureit-client
+    ports:
+      - "3000:80"
+    environment:
+      - VITE_API_URL=/
+    networks:
+      - secureit-network
+    depends_on:
+      api-gateway:
+        condition: service_healthy
+    restart: on-failure
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  secureit-network:
+    driver: bridge

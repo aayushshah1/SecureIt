@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 const AuthContext = createContext();
 
 // Hook for easy context consumption
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
@@ -20,6 +21,8 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  // Hardcoded auth service URL per troubleshooting request (bypasses gateway)
+  const AUTH_API_BASE_URL = "http://localhost:8081/api/auth";
 
   // Check if user is already authenticated on mount
   useEffect(() => {
@@ -49,8 +52,6 @@ export const AuthProvider = ({ children }) => {
     setError(null);
 
     try {
-      // API base URL - will be replaced with the actual Kubernetes service endpoint
-      const AUTH_API_BASE_URL = "http://localhost:8081/api/auth"
       const response = await fetch(`${AUTH_API_BASE_URL}/login`, {
         method: 'POST',
         headers: {
@@ -96,9 +97,6 @@ export const AuthProvider = ({ children }) => {
     setError(null);
 
     try {
-      // API base URL - will be replaced with the actual Kubernetes service endpoint
-      const AUTH_API_BASE_URL = "http://localhost:8081/api/auth"
-
       const response = await fetch(`${AUTH_API_BASE_URL}/register`, {
         method: 'POST',
         headers: {

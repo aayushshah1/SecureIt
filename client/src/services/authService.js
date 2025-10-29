@@ -1,5 +1,5 @@
-// API base URL - will be replaced with the actual Kubernetes service endpoint
-const AUTH_API_BASE_URL = "http://localhost:8081/api/auth"
+// Direct auth service endpoint (bypasses API gateway as requested)
+const AUTH_API_BASE_URL = "http://localhost:8081/api/auth";
 
 const authService = {
   // Register a new user

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
@@ -40,19 +40,9 @@ export default function Dashboard() {
   const [editingPassword, setEditingPassword] = useState(null);
 
   const navigate = useNavigate();
-  const { user, logout, isAuthenticated, getCurrentUserId } = useAuth();
+  const { logout, isAuthenticated, getCurrentUserId } = useAuth();
 
-  useEffect(() => {
-
-    if (!isAuthenticated()) {
-      navigate("/");
-      return;
-    }
-
-    fetchPasswords();
-  }, [navigate, isAuthenticated]);
-
-  const fetchPasswords = async () => {
+  const fetchPasswords = useCallback(async () => {
     setIsLoading(true);
     try {
       const userId = getCurrentUserId();
@@ -66,7 +56,16 @@ export default function Dashboard() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [getCurrentUserId]);
+
+  useEffect(() => {
+    if (!isAuthenticated()) {
+      navigate("/");
+      return;
+    }
+
+    fetchPasswords();
+  }, [navigate, isAuthenticated, fetchPasswords]);
 
   const handleLogout = () => {
     logout();
@@ -209,10 +208,10 @@ export default function Dashboard() {
               <form onSubmit={handleAddPassword}>
                 <div className="grid gap-4 py-4">
                   <div className="space-y-2">
-                    <Label htmlFor="title">Title</Label>
+                    <Label htmlFor="title">Title/Description</Label>
                     <Input
                       id="title"
-                      value={newPassword.title}
+                      value={newPassword.description}
                       onChange={(e) =>
                         setNewPassword({ ...newPassword, description: e.target.value })
                       }
@@ -238,7 +237,7 @@ export default function Dashboard() {
                       <Input
                         id="password"
                         type={showPassword.new ? "text" : "password"}
-                        value={newPassword.password}
+                        value={newPassword.value}
                         onChange={(e) =>
                           setNewPassword({ ...newPassword, value: e.target.value })
                         }
@@ -299,7 +298,7 @@ export default function Dashboard() {
             {filteredPasswords.map((password) => (
               <Card key={password.id} className="overflow-hidden">
                 <CardHeader className="pb-2">
-                  <CardTitle>{password.title}</CardTitle>
+                  <CardTitle>{password.description}</CardTitle>
                   <CardDescription className="truncate">
                     {password.website || "No website URL"}
                   </CardDescription>
@@ -341,7 +340,7 @@ export default function Dashboard() {
                         <Button
                           variant="ghost"
                           size="icon"
-                          onClick={() => handleCopyToClipboard(password.password)}
+                          onClick={() => handleCopyToClipboard(password.value)}
                         >
                           <Copy className="h-4 w-4" />
                         </Button>
@@ -372,14 +371,14 @@ export default function Dashboard() {
                           <form onSubmit={handleUpdatePassword}>
                             <div className="grid gap-4 py-4">
                               <div className="space-y-2">
-                                <Label htmlFor="edit-title">Title</Label>
+                                <Label htmlFor="edit-title">Title/Description</Label>
                                 <Input
                                   id="edit-title"
-                                  value={editingPassword.title}
+                                  value={editingPassword.description}
                                   onChange={(e) =>
                                     setEditingPassword({
                                       ...editingPassword,
-                                      title: e.target.value,
+                                      description: e.target.value,
                                     })
                                   }
                                   required
@@ -405,11 +404,11 @@ export default function Dashboard() {
                                   <Input
                                     id="edit-password"
                                     type={showPassword.edit ? "text" : "password"}
-                                    value={editingPassword.password}
+                                    value={editingPassword.value}
                                     onChange={(e) =>
                                       setEditingPassword({
                                         ...editingPassword,
-                                        password: e.target.value,
+                                        value: e.target.value,
                                       })
                                     }
                                     required

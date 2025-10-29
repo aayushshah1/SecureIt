@@ -6,7 +6,22 @@
   <component name="ChangeListManager">
     <list default="true" id="859d2a8d-aac7-4fdd-b876-538f9866ed2c" name="Changes" comment="Test Push">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/service/PasswordService.java" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/src/main/java/com/msaproject/pmbackend/service/PasswordService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EurekaServer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/EurekaServer/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EurekaServer/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/EurekaServer/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Service/JwtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/src/main/java/com/example/auth_server/Service/JwtService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-server/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/auth-server/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/k8s/apmtools/grafana/grafana.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/apmtools/grafana/grafana.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/k8s/apmtools/prometheus/prometheus.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/apmtools/prometheus/prometheus.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/k8s/backend/app-secrets.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/backend/app-secrets.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/k8s/backend/auth-server-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/backend/auth-server-deployment.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/k8s/backend/backend-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/backend/backend-deployment.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/k8s/backend/eureka-server-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/backend/eureka-server-deployment.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/local-deployment.bat" beforeDir="false" afterPath="$PROJECT_DIR$/local-deployment.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/local-deployment.sh" beforeDir="false" afterPath="$PROJECT_DIR$/local-deployment.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pmbackend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pmbackend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/pmbackend/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,7 +180,10 @@
       <workItem from="1744543776842" duration="14047000" />
       <workItem from="1744573561253" duration="5563000" />
       <workItem from="1744581569661" duration="2560000" />
-      <workItem from="1744612592384" duration="3015000" />
+      <workItem from="1744612592384" duration="5222000" />
+      <workItem from="1744630670494" duration="163000" />
+      <workItem from="1744730824699" duration="171000" />
+      <workItem from="1761754147980" duration="457000" />
     </task>
     <task id="LOCAL-00001" summary="EurekaServer">
       <option name="closed" value="true" />

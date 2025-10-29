@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,7 +10,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { login, loading, error } = useAuth();
+  const { login, loading } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -61,10 +61,16 @@ export default function Login() {
               />
             </div>
           </CardContent>
-          <CardFooter>
+          <CardFooter className="flex flex-col space-y-4">
             <Button className="w-full" type="submit" disabled={loading}>
               {loading ? "Logging in..." : "Login"}
             </Button>
+            <div className="text-center text-sm">
+              Don't have an account?{" "}
+              <Link to="/register" className="text-blue-600 hover:underline">
+                Register here
+              </Link>
+            </div>
           </CardFooter>
         </form>
       </Card>

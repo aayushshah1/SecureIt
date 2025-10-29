@@ -1,4 +1,4 @@
-// API base URL - will be replaced with the actual Kubernetes service endpoint
+// Direct password manager service endpoint (gateway bypass)
 const PM_API_BASE_URL = "http://localhost:8080/api/passwords";
 
 const passwordService = {
@@ -119,7 +119,8 @@ const handleResponseError = async (response) => {
   try {
     const errorData = await response.json();
     throw new Error(errorData.message || `Error: ${response.statusText}`);
-  } catch (error) {
+  } catch (parseError) {
+    console.error('Failed to parse error payload from password service:', parseError);
     // If the response doesn't contain valid JSON
     throw new Error(`Error: ${response.statusText}`);
   }

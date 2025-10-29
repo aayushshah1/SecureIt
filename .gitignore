@@ -44,10 +44,6 @@ logs/
 .DS_Store
 Thumbs.db
 
-# Ignore environment variables
-.env
-env.properties
-
 # Ignore compiled application files
 *.jar
 *.war
